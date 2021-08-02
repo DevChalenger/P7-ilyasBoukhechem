@@ -5,11 +5,12 @@ const admin = require("../middleware/admin");
 exports.createPost = async (req, res, next) => {
   const title = req.body.title;
   const text = req.body.text;
+  const imgData = req.body.imgUrl;
   const userId = token.verification(req);
 
-  if (text.length < 2 || title.length < 2) {
+  /* if (text.length < 2 || title.length < 2) {
     res.status(401).json("Tous les champs ne sont pas rempli");
-  }
+  } */
   if (userId != token.verification(req)) {
     res.status(403).json("Vous n'êtes pas autorisé à créer un post");
   }
@@ -22,12 +23,13 @@ exports.createPost = async (req, res, next) => {
       includes: [
         {
           model: models.user,
-          attributes: ["text", "title", "id"],
+          attributes: ["text", "title", "id", "imgUrl"],
         },
       ],
       text: text,
       title: title,
       userId: user.id,
+      imgUrl: imgData,
     });
 
     res
@@ -69,9 +71,10 @@ exports.modifyPost = async (req, res, next) => {
 
   try {
     const update = await models.post.findOne({
+      attributes: ["userId"],
       where: { id: req.params.id },
     });
-    if (update.userId == token.verification(req)) {
+    if (update.userId) {
       if (title == null && text == null) {
         res.status(401).json("Tous les champs ne sont pas rempli");
       } else {
@@ -141,9 +144,6 @@ exports.getOnePost = async (req, res, next) => {
         "imgUrl",
       ],
       where: { id: req.params.id },
-    });
-    const findAdmin = await models.user.findOne({
-      attributes: ["admin"],
     });
     if (!posts) {
       res.status(404).json("Poste introuvable");

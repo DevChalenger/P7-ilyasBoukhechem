@@ -37,7 +37,9 @@
             <div
               class="DescriptionBlock card-text d-flex justify-content-around"
             >
-              <a> <i class="fas fa-comments"></i></a>
+              <a v-bind:href="'/#/post/' + post.id">
+                <i class="fas fa-comments"></i
+              ></a>
               <p id="description" class="descriptionIndex">
                 {{ post.createdAt }}
               </p>

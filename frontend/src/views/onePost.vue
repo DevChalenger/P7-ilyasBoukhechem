@@ -1,75 +1,75 @@
 <template>
-  <div v-if="token == null" class="d-flex justify-content-center">
-    <div class="card mt-5 p-5 ">
-      Pour pouvoir consulter la page vous devez vous connecter
-      <router-link to="/">Connection</router-link><br />
-      Si vous n'avez pas encore de compte inscrivez vous
-      <router-link to="/signup">Inscription</router-link>
+  <div>
+    <div v-if="token == null" class="d-flex justify-content-center">
+      <div class="card mt-5 p-5 ">
+        Pour pouvoir consulter la page vous devez vous connecter
+        <router-link to="/">Connection</router-link><br />
+        Si vous n'avez pas encore de compte inscrivez vous
+        <router-link to="/signup">Inscription</router-link>
+      </div>
     </div>
-    <div v-if="token != null">
+    <div v-if="token != null" class="">
       <Header />
-      <div class="d-flex justify-content-around ">
-        <div class=" ">
-          <div class="d-flex justify-content-center">
-            <p><strong>Votre email :</strong></p>
-            <p>{{ user.email }}</p>
+      <div class=" d-flex justify-content-center">
+        <div class="card m-2">
+          <div class="card-header">
+            <h2 id="Title">
+              {{ postId.user.lastName + " " + postId.user.firstName }}
+            </h2>
           </div>
-          <div class="d-flex justify-content-center">
-            <p><strong>Votre prénom :</strong></p>
-            <p>{{ user.firstName }}</p>
+          <div class="DescriptionBlock card-text">
+            <h2 id="Title">{{ postId.title }}</h2>
+            <p id="description" class="descriptionIndex">{{ postId.text }}</p>
+            <div
+              class="m-4 d-flex justify-content-center"
+              v-if="postId.imgUrl != null"
+            >
+              <img v-bind:src="'data:image/*;base64,' + postId.imgUrl" />
+            </div>
           </div>
-          <div class="d-flex justify-content-center">
-            <p><strong>Votre Nom:</strong></p>
-            <p>{{ user.lastName }}</p>
-          </div>
-        </div>
-        <div>
-          <div>
-            <button type="button" class="btn btn-danger mb-4" @click="logout">
-              Déconnection
-            </button>
-          </div>
-          <div>
-            <button type="button" class="btn btn-danger" @click="deleteProfile">
-              Suprimer le profile
-            </button>
+          <div
+            v-for="postComments in postId.comments"
+            :key="postComments"
+            class="card"
+          >
+            {{ postComments.text }}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
 import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 
 export default {
   data() {
     return {
-      user: [],
+      postId: [],
       token: null,
     };
   },
-  components: { Header },
+  components: { Header, Footer },
   mounted() {
-    this.getProfil();
+    this.getOnePost();
   },
   methods: {
-    logout() {
-      sessionStorage.clear();
-      window.location.href = "/#/signup";
-    },
-    getProfil() {
+    getOnePost() {
       const token = sessionStorage.getItem("token");
       this.token = token;
-      const id = sessionStorage.getItem("usersId");
+      const postId = this.$route.params.id;
       axios
-        .get("http://localhost:3000/api/auth/user/" + JSON.parse(id), {
+        .get("http://localhost:3000/api/posts/" + postId, {
           headers: {
             Authorization: "Bearer " + token,
           },
         })
-        .then((res) => (this.user = res.data))
+        .then((res) => {
+          console.log(res), (this.postId = res.data);
+        })
         .catch((error) => console.log(error));
     },
     deleteProfile() {
@@ -93,3 +93,9 @@ export default {
   computed: {},
 };
 </script>
+<style scoped>
+img {
+  min-height: 200px;
+  max-height: 400px;
+}
+</style>

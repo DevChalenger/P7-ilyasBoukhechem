@@ -1,7 +1,6 @@
 const express = require("express"); //Importation du module express//
 const bodyParser = require("body-parser"); //Importation du module body-parser//
 const helmet = require("helmet");
-const path = require("path");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
@@ -23,8 +22,8 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: "5mb" }));
+app.use(bodyParser.json({ limit: "5mb" }));
 app.use(helmet());
 
 const connectionTest = async function () {
@@ -41,7 +40,7 @@ const connectionTest = async function () {
   }
 };
 connectionTest();
-app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use("/api/posts", postRoutes); //middleware pour les routes post//
 app.use("/api/reply", commentRoutes); //middleware pour les routes post//
 app.use("/api/auth", userRoutes); //middleware pour les routes users//
