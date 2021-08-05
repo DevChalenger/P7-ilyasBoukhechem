@@ -1,10 +1,10 @@
 const express = require("express"); //Importation du module express//
 const bodyParser = require("body-parser"); //Importation du module body-parser//
 const helmet = require("helmet");
+const morgan = require("morgan");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
-
 const { sequelize } = require("./models/index");
 require("dotenv").config();
 
@@ -22,8 +22,9 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(bodyParser.urlencoded({ extended: true, limit: "5mb" }));
-app.use(bodyParser.json({ limit: "5mb" }));
+app.use(morgan("tiny"));
+app.use(bodyParser.urlencoded({ extended: true, limit: "2mb" }));
+app.use(bodyParser.json({ limit: "2mb" }));
 app.use(helmet());
 
 const connectionTest = async function () {

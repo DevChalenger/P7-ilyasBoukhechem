@@ -12,15 +12,20 @@
     <form class="Form-Signup d-flex flex-column  " @submit.prevent="login()">
       <div class="m-1  p-2">
         <label>Email</label>
-        <input id="email" type="email" v-model="email" />
+        <input id="email" class="form-control" type="email" v-model="email" />
       </div>
       <div class="m-1 p-2">
         <label>Mot de passe</label>
-        <input id="password" type="password" v-model="password" />
+        <input
+          id="password"
+          class="form-control"
+          type="password"
+          v-model="password"
+        />
       </div>
       <button
         @click.prevent="login"
-        class="button_disabled m-2 ml-5 mr-5"
+        class="btn btn-primary m-2 ml-5 mr-5"
         id="validate"
       >
         Valider
@@ -47,17 +52,17 @@ export default {
         email: this.email,
         password: this.password,
       };
+
       axios
         .post("http://localhost:3000/api/auth/login", fields)
         .then((res) => {
-          console.log("Utilisateur connecté");
+          alert("Utilisateur connecté");
           sessionStorage.setItem("token", res.data.token);
-          sessionStorage.setItem("usersId", res.data.userId);
           window.location.href = "/#/home";
         })
         .catch((error) => {
           console.log(error),
-            alert("Les champs ne sont pas rempli correctement");
+            alert(JSON.stringify(error.response.data.message));
         });
     },
   },
@@ -86,9 +91,5 @@ nav .unactive {
 .Form-Signup div {
   display: flex;
   flex-direction: column;
-}
-.btn {
-  background-color: rgb(250, 140, 140);
-  color: white;
 }
 </style>

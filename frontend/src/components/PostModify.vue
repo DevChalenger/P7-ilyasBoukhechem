@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-center block p-4">
-    <h2>Créer un nouveaux post</h2>
+    <h2>Modifier le post</h2>
     <form
       class=" d-flex flex-column justify-content-center "
       @submit.prevent="onSubmit()"
@@ -37,8 +37,8 @@
           <i class="fas fa-upload"></i>
         </label>
       </div>
-      <div class="p-3 4">
-        <img id="output" alt="dataImage" />
+      <div>
+        <img id="output" class="m-2" />
       </div>
       <div
         class="d-flex m-2 flex-column justify-content-center align-items-center"
@@ -53,7 +53,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "CreatePost",
+  name: "ModifyPost",
   data() {
     return {
       text: "",
@@ -78,7 +78,6 @@ export default {
       };
       reader.onerror = (error) => error;
       reader.readAsDataURL(file);
-
       /*    console.log(dataURL); */
     },
     onSubmit() {
@@ -87,10 +86,10 @@ export default {
         text: this.text,
         imgUrl: sessionStorage.getItem("imgData"),
       };
-
+      const postId = this.$route.params.id;
       if (fields.title.length >= 2 && fields.text.length >= 2) {
         axios
-          .post("http://localhost:3000/api/posts/", fields, {
+          .put("http://localhost:3000/api/posts/" + postId, fields, {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),
             },
@@ -120,7 +119,7 @@ textarea {
   height: 100px;
 }
 img {
-  width: 200px;
-  max-height: 400px;
+  min-width: 100px;
+  max-height: 300px;
 }
 </style>

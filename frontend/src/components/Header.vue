@@ -1,27 +1,37 @@
 <template>
   <div id="app">
-    <div class="header d-flex justify-content-between">
-      <div class="d-flex align-items-center">
-        <img src="@\assets\icon.png" />
+    <header
+      class="header d-flex justify-content-center-xs justify-content-around  flex-wrap mb-5"
+    >
+      <div class="d-flex align-items-center ">
+        <img src="@\assets\icon.png" alt="dataImage" />
       </div>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center flex-wrap">
         <nav>
           <ul class="d-flex flex-column p-0 mb-0">
-            <li class="m-2">
-              <router-link to="/Home">Acceuil</router-link>
+            <li class="m-2 btn">
+              <router-link to="/Home">
+                <div class="btn btn-outline-info">
+                  Acceuil
+                </div>
+              </router-link>
             </li>
             <li class="m-2">
-              <router-link to="/allUsers">Liste des utilisateur </router-link>
+              <router-link to="/allUsers">
+                <div class="btn btn-outline-info">Liste des utilisateur</div>
+              </router-link>
             </li>
           </ul>
         </nav>
       </div>
       <div class="d-flex align-items-center p-4">
         <router-link to="/user/:id">
-          <i class="fas fa-user-circle"> </i
-        ></router-link>
+          <div class="btn btn-outline-info">
+            <i class="fas fa-user-circle"> </i>
+          </div>
+        </router-link>
       </div>
-    </div>
+    </header>
   </div>
 </template>
 <script>

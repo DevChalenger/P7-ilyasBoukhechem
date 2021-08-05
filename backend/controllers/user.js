@@ -19,14 +19,14 @@ exports.signup = (req, res, next) => {
   ) {
     return res
       .status(400)
-      .json({ error: "Tous les champs ne sont pas valide" });
+      .json({ message: "Tous les champs ne sont pas valide" });
   }
 
   if (firstName.length >= 15 || firstName.length <= 2) {
-    res.status(401).json({ error: "Le prénom n'est pas valide" });
+    res.status(400).json({ message: "Le prénom n'est pas valide" });
   }
   if (lastName.length >= 25 || lastName.length <= 2) {
-    res.status(401).json({ error: "Le nom n'est pas valide" });
+    res.status(400).json({ message: "Le nom n'est pas valide" });
   }
   models.user
     .findOne({
@@ -48,17 +48,18 @@ exports.signup = (req, res, next) => {
             .then((user) => {
               return res.status(201).json({ idUser: user.id });
             })
-            .catch((error) => res.status(400).json({ error }));
+            .catch((error) => res.status(400).json({ message: error + "" }));
         });
       } else {
-        return res
-          .status(400)
-          .json("Un utilisateur est déja enrengistré avec cette adresse mail");
+        return res.status(400).json({
+          message:
+            "Un utilisateur est déja enrengistré avec cette adresse mail",
+        });
       }
     })
     .catch(() => {
       res.status(500).json({
-        error:
+        message:
           "Impossible de verifier si l'utilisateur est enrengistré dans la base de donnés",
       });
     });
@@ -70,7 +71,7 @@ exports.login = (req, res, next) => {
   if (email == null || password == null) {
     return res
       .status(400)
-      .json({ error: "Tous les champs ne sont pas valide" });
+      .json({ message: "Tous les champs ne sont pas valide" });
   }
   console.log(email);
   models.user
@@ -84,22 +85,25 @@ exports.login = (req, res, next) => {
           .then((valid) => {
             if (!valid) {
               return res
-                .status(401)
-                .json({ error: "Mot de passe incorrect !" });
+                .status(400)
+                .json({ message: "Mot de passe incorrect !" });
             }
             res.status(200).json({
-              userId: users.id,
-              token: jwt.sign({ userId: users.id }, secret.authSecret, {
-                expiresIn: "24h",
-              }),
+              token: jwt.sign(
+                { userId: users.id, admin: users.admin },
+                secret.authSecret,
+                {
+                  expiresIn: "6h",
+                }
+              ),
             });
           })
-          .catch((error) => res.status(500).json({ error }));
+          .catch((error) => res.status(500).json({ message: error + "" }));
       } else {
-        return res.status(404).json({ error: "Utilisateur non trouvé !" });
+        return res.status(404).json({ message: "Utilisateur non trouvé !" });
       }
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(500).json({ message: error + "" }));
 };
 
 exports.userDelete = (req, res, next) => {
@@ -118,35 +122,35 @@ exports.userDelete = (req, res, next) => {
       ],
       where: { id: userId },
     });
-    if (userId != verification) {
-      res
-        .status(403)
-        .json(`L'utilisateur n'est pas autorisé a suprimer le profil`);
+    if (userId != token.verification(req)) {
+      return res.status(403).json({
+        message: `L'utilisateur n'est pas autorisé a suprimer le profil`,
+      });
     }
     console.log(userId);
     if (!userId) {
       return res
-        .status(401)
-        .json({ error: "Identifiant utilisateur invalide" });
+        .status(404)
+        .json({ message: "Identifiant utilisateur invalide" });
     }
     models.user
       .destroy({ where: { id: userId } })
       .then(() => {
-        return res.status(204).json({ message: "Utilisateur supprimé" });
+        return res.status(202).json({ message: "Utilisateur supprimé" });
       })
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(400).json({ message: error + "" }));
   } catch (error) {
-    return res.status(500).json({ error: error });
+    return res.status(500).json({ error: error + "" });
   }
 };
 
 exports.getInformationUser = (req, res, next) => {
   const userId = req.params.id;
   const verify = token.verification(req);
-  if (userId != verify || models.user.admin == true) {
-    res
-      .status(401)
-      .json(`L'utilisateur n'est pas autorisé a consulter le profil`);
+  if (userId != verify || models.user.admin === true) {
+    res.status(403).json({
+      message: `L'utilisateur n'est pas autorisé a consulter le profil`,
+    });
   }
   models.user
     .findOne({
@@ -155,7 +159,7 @@ exports.getInformationUser = (req, res, next) => {
     })
 
     .then((users) => res.status(200).json(users))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ message: error + "" }));
 };
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -169,6 +173,6 @@ exports.getAllUsers = async (req, res, next) => {
     });
     res.status(200).json(users);
   } catch (error) {
-    return res.status(500).json({ error: "Erreur serveur" });
+    return res.status(500).json({ message: "Erreur serveur" });
   }
 };

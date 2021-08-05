@@ -3,7 +3,7 @@
     <div v-if="token == null" class="d-flex justify-content-center">
       <div class="card mt-5 p-5 ">
         Pour pouvoir consulter la page vous devez vous connecter
-        <router-link to="/">Connection</router-link><br />
+        <a href="/">Connection</a><br />
         Si vous n'avez pas encore de compte inscrivez vous
         <router-link to="/signup">Inscription</router-link>
       </div>
@@ -20,18 +20,21 @@
         >
           <div class="card m-4">
             <div class="card-header">
-              <h2 id="Title">
+              <h4 id="Title">
                 {{ post.user.lastName + " " + post.user.firstName }}
-              </h2>
+              </h4>
             </div>
             <div class="DescriptionBlock card-text">
-              <h2 id="Title">{{ post.title }}</h2>
+              <h4 id="Title">{{ post.title }}</h4>
               <p id="description" class="descriptionIndex">{{ post.text }}</p>
               <div
-                class="m-4 d-flex justify-content-center"
+                class="m-2 d-flex justify-content-center"
                 v-if="post.imgUrl != null"
               >
-                <img v-bind:src="'data:image/*;base64,' + post.imgUrl" />
+                <img
+                  v-bind:src="'data:image/*;base64,' + post.imgUrl"
+                  alt="dataImage"
+                />
               </div>
             </div>
             <div
@@ -40,6 +43,7 @@
               <a v-bind:href="'/#/post/' + post.id">
                 <i class="fas fa-comments"></i
               ></a>
+              <span>{{ post.comments.id }}</span>
               <p id="description" class="descriptionIndex">
                 {{ post.createdAt }}
               </p>
@@ -84,7 +88,14 @@ export default {
           },
         })
         .then((res) => (this.posts = res.data))
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          alert(JSON.stringify(error.response.data.message));
+          if (error.response.status == 401) {
+            sessionStorage.clear();
+            window.location.href = "/";
+          }
+        });
     },
   },
 };
@@ -98,8 +109,6 @@ i {
   font-size: 30px;
 }
 img {
-  max-height: 400px;
-
-  min-width: 100%;
+  width: 100%;
 }
 </style>

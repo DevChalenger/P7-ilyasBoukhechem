@@ -60,7 +60,13 @@ export default {
           },
         })
         .then((res) => (this.users = res.data))
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          if (error.response.status == 401) {
+            sessionStorage.clear();
+            window.location.href = "/";
+          }
+          alert(JSON.stringify(error.response.data.message));
+        });
     },
   },
 };

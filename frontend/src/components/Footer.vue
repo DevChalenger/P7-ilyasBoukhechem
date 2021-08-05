@@ -1,8 +1,8 @@
 <template>
-  <div class="footer">
+  <footer class="footer p-5 ">
     <div>Contact</div>
     <div>Politique du site</div>
-  </div>
+  </footer>
 </template>
 <script>
 export default {
@@ -15,7 +15,7 @@ export default {
   box-shadow: 20px 20px 20px 20px;
   width: 100%;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 300px;
   height: 100px;
 }
 </style>
