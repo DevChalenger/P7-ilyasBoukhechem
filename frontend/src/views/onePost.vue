@@ -101,12 +101,14 @@ export default {
       const token = sessionStorage.getItem("token");
       this.token = token;
       const postId = this.$route.params.id;
-      let decoded = jwt_decode(token);
+      if (token != null) {
+        const decoded = jwt_decode(token);
 
-      const userId = decoded.userId;
-      const isAdmin = decoded.admin;
-      this.isAdmin = isAdmin;
-      this.userId = userId;
+        const userId = decoded.userId;
+        const isAdmin = decoded.admin;
+        this.isAdmin = isAdmin;
+        this.userId = userId;
+      }
       {
         axios
           .get("http://localhost:3000/api/posts/" + postId, {

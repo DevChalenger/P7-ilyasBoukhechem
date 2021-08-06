@@ -67,44 +67,48 @@ export default {
     getProfil() {
       const token = sessionStorage.getItem("token");
       this.token = token;
-      let decoded = jwt_decode(token);
-      axios
-        .get("http://localhost:3000/api/auth/user/" + decoded.userId, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        })
-        .then((res) => (this.user = res.data))
-        .catch((error) => {
-          alert(JSON.stringify(error.response.data.message))();
-          if (error.response.status == 401) {
-            sessionStorage.clear();
-            window.location.href = "/";
-          }
-        });
-    },
-    deleteProfile() {
-      if (window.confirm("Voulez vous suprimer le profile ?")) {
-        const token = sessionStorage.getItem("token");
+      if (token != null) {
         let decoded = jwt_decode(token);
         axios
-          .delete("http://localhost:3000/api/auth/delete/" + decoded.userId, {
+          .get("http://localhost:3000/api/auth/user/" + decoded.userId, {
             headers: {
-              Authorization: "Bearer " + sessionStorage.getItem("token"),
+              Authorization: "Bearer " + token,
             },
           })
-          .then((res) => {
-            console.log(res),
-              (window.location.href = "/#/signup"),
-              alert(JSON.stringify(res.response.data.message)),
-              sessionStorage.clear();
-          })
+          .then((res) => (this.user = res.data))
           .catch((error) => {
+            alert(JSON.stringify(error.response.data.message))();
             if (error.response.status == 401) {
               sessionStorage.clear();
+              window.location.href = "/";
             }
-            alert(JSON.stringify(error.response.data.message));
           });
+      }
+    },
+    deleteProfile() {
+      if (this.token != null) {
+        if (window.confirm("Voulez vous suprimer le profile ?")) {
+          const token = sessionStorage.getItem("token");
+          let decoded = jwt_decode(token);
+          axios
+            .delete("http://localhost:3000/api/auth/delete/" + decoded.userId, {
+              headers: {
+                Authorization: "Bearer " + sessionStorage.getItem("token"),
+              },
+            })
+            .then((res) => {
+              console.log(res),
+                (window.location.href = "/#/signup"),
+                alert(JSON.stringify(res.response.data.message)),
+                sessionStorage.clear();
+            })
+            .catch((error) => {
+              if (error.response.status == 401) {
+                sessionStorage.clear();
+              }
+              alert(JSON.stringify(error.response.data.message));
+            });
+        }
       }
     },
   },

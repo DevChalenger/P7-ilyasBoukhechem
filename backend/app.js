@@ -2,6 +2,7 @@ const express = require("express"); //Importation du module express//
 const bodyParser = require("body-parser"); //Importation du module body-parser//
 const helmet = require("helmet");
 const morgan = require("morgan");
+const rateLimit = require("express-rate-limit");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
@@ -21,6 +22,11 @@ app.use((req, res, next) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
+});
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: "Trop de tentative enrengistré veiller réessayer dans 15min ",
 });
 app.use(morgan("tiny"));
 app.use(bodyParser.urlencoded({ extended: true, limit: "2mb" }));
@@ -45,4 +51,5 @@ connectionTest();
 app.use("/api/posts", postRoutes); //middleware pour les routes post//
 app.use("/api/reply", commentRoutes); //middleware pour les routes post//
 app.use("/api/auth", userRoutes); //middleware pour les routes users//
+app.use("/api/auth/login", apiLimiter);
 module.exports = app;

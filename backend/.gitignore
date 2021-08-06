@@ -2,4 +2,4 @@ node_modules
 .env
 secret,
 config,
-sql.sql
+groupomania.sql
