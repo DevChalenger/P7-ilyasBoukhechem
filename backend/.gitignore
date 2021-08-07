@@ -1,5 +1,5 @@
 node_modules
 .env
-secret,
-config,
+secret
+config
 groupomania.sql
