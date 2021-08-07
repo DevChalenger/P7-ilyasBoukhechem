@@ -68,7 +68,7 @@ export default {
       const token = sessionStorage.getItem("token");
       this.token = token;
       if (token != null) {
-        let decoded = jwt_decode(token);
+        let decoded = jwt_decode(this.token);
         axios
           .get("http://localhost:3000/api/auth/user/" + decoded.userId, {
             headers: {
@@ -77,7 +77,7 @@ export default {
           })
           .then((res) => (this.user = res.data))
           .catch((error) => {
-            alert(JSON.stringify(error.response.data.message))();
+            alert(JSON.stringify(error.response.data.message));
             if (error.response.status == 401) {
               sessionStorage.clear();
               window.location.href = "/";
