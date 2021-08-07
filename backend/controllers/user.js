@@ -93,7 +93,7 @@ exports.login = (req, res, next) => {
                 { userId: users.id, admin: users.admin },
                 secret.authSecret,
                 {
-                  expiresIn: "10s",
+                  expiresIn: "6h",
                 }
               ),
             });
