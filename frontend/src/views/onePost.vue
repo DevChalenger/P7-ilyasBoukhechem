@@ -11,14 +11,14 @@
     <div v-if="token != null" class="">
       <Header />
       <div class=" d-flex justify-content-center">
-        <div class="card m-5">
-          <div class="card-header m-0">
+        <div class="card m-5 ard m-4 backgroundCard p-2">
+          <div class="card-header backgroundCardHeader p-3 m-1">
             <h4 id="Title">
               {{ userPost.firstName }}
               {{ userPost.lastName }}
             </h4>
           </div>
-          <div class="DescriptionBlock card-text">
+          <div class="DescriptionBlock card-text backgroundText m-1 ">
             <h4 id="Title">{{ postId.title }}</h4>
             <p id="description" class="descriptionIndex">{{ postId.text }}</p>
             <div
@@ -34,8 +34,8 @@
               v-if="userId == postId.userId || isAdmin === true"
               class="m-4 "
             >
-              <button @click.prevent="deletePost()" class="btn btn-danger">
-                suprimer
+              <button @click.prevent="deletePost()" class="">
+                supprimer
               </button>
             </div>
           </div>
@@ -43,7 +43,7 @@
           <div
             v-for="postComment in postId.comments"
             :key="postComment"
-            class="card mt-4"
+            class="card mt-4 p-0 borderRadius"
           >
             <div class="card-header">
               {{ postComment.user.firstName }}
@@ -51,14 +51,11 @@
             </div>
             <div>{{ postComment.text }}</div>
             <div v-if="userId == postComment.user.id || isAdmin === true">
-              <button
-                class="btn btn-danger"
-                @click.prevent="deleteComment(postComment.id)"
-              >
+              <button class="" @click.prevent="deleteComment(postComment.id)">
                 suprimer le commentaire
               </button>
             </div>
-            <div>{{ postComment.createdAt }}</div>
+            <div>{{ getDateWithoutTime(postComment.createdAt) }}</div>
           </div>
           <div class="m-2">
             <form @submit.prevent="postComment()">
@@ -97,6 +94,9 @@ export default {
     this.getOnePost();
   },
   methods: {
+    getDateWithoutTime(date) {
+      return require("moment")(date).format("HH:mm YYYY-MM-DD ");
+    },
     getOnePost() {
       const token = sessionStorage.getItem("token");
       this.token = token;
@@ -184,8 +184,8 @@ export default {
 </script>
 <style scoped>
 img {
-  max-height: 400px;
   width: 100%;
+  padding: 1em;
 }
 textarea {
   width: 100%;

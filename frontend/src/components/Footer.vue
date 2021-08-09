@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer p-5 ">
+  <footer class="footer p-5 backgroundCard">
     <div>Contact</div>
     <div>Politique du site</div>
   </footer>

@@ -11,11 +11,11 @@
     </nav>
     <form class="Form-Signup d-flex flex-column  " @submit.prevent="login()">
       <div class="m-1  p-2">
-        <label>Email</label>
+        <label for="email">Email</label>
         <input id="email" class="form-control" type="email" v-model="email" />
       </div>
       <div class="m-1 p-2">
-        <label>Mot de passe</label>
+        <label for="password">Mot de passe</label>
         <input
           id="password"
           class="form-control"
@@ -70,10 +70,10 @@ export default {
 </script>
 <style scoped>
 nav .active {
-  color: red;
+  color: #eb0000;
 }
 nav .unactive {
-  color: rgb(200, 140, 140);
+  color: #a45b5b;
 }
 .Logo {
   max-height: 300px;

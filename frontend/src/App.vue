@@ -10,16 +10,13 @@
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
@@ -39,7 +36,6 @@
   color: #666;
   font-weight: 500;
 }
-
 .card__action {
   color: #2196f3;
   text-decoration: underline;
@@ -47,10 +43,10 @@
 .card__action:hover {
   cursor: pointer;
 }
-.button:hover {
+button:hover {
   cursor: pointer;
   border: none;
-  background: #1976d2;
+  background-color: rgb(226, 67, 67);
 }
 .button:active {
   cursor: pointer;
@@ -59,10 +55,25 @@
 button:focus {
   outline: none;
 }
-.button_disabled {
-  background: rgb(255, 159, 172);
+.borderRadius {
+  border-radius: 0.5em;
+}
+button {
+  background-color: #7c0e0e;
+  outline: none;
+  border: 0;
   color: white;
-  border: none;
-  padding: 5px;
+  padding: 0.5em 1.5rem;
+  border-radius: 0.5em;
+}
+.backgroundCard {
+  background-color: rgb(250, 195, 195);
+}
+.backgroundCardHeader {
+  background-color: #7c0e0e;
+  color: rgb(250, 195, 195);
+}
+.backgroundText {
+  background-color: white;
 }
 </style>

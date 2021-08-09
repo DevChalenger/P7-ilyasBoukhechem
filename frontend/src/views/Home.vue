@@ -18,13 +18,13 @@
           :key="post"
           class="d-flex justify-content-center"
         >
-          <div class="card m-4">
-            <div class="card-header">
-              <h4 id="Title">
+          <div class="card m-4 backgroundCard p-2">
+            <div class=" backgroundCardHeader borderRadius p-3 m-1">
+              <h3 id="Title">
                 {{ post.user.lastName + " " + post.user.firstName }}
-              </h4>
+              </h3>
             </div>
-            <div class="DescriptionBlock card-text">
+            <div class="DescriptionBlock card-text backgroundText p-1 m-3">
               <h4 id="Title">{{ post.title }}</h4>
               <p id="description" class="descriptionIndex">{{ post.text }}</p>
               <div
@@ -38,14 +38,17 @@
               </div>
             </div>
             <div
-              class="DescriptionBlock card-text d-flex justify-content-around"
+              class="DescriptionBlock card-text d-flex justify-content-around "
             >
-              <a v-bind:href="'/#/post/' + post.id">
-                <i class="fas fa-comments"></i
-              ></a>
+              <div>
+                <a v-bind:href="'/#/post/' + post.id">
+                  <i class="fas fa-comments mr-2"></i>
+                  <span>Commentaires</span>
+                </a>
+              </div>
               <span>{{ post.comments.id }}</span>
               <p id="description" class="descriptionIndex">
-                {{ post.createdAt }}
+                {{ getDateWithoutTime(post.createdAt) }}
               </p>
             </div>
           </div>
@@ -61,6 +64,7 @@ import axios from "axios";
 import NewPost from "../components/CreatePost.vue";
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
+
 export default {
   name: "app",
   components: {
@@ -78,6 +82,9 @@ export default {
     this.getAllposts();
   },
   methods: {
+    getDateWithoutTime(date) {
+      return require("moment")(date).format("HH:mm YYYY-MM-DD ");
+    },
     getAllposts() {
       const token = sessionStorage.getItem("token");
       this.token = token;

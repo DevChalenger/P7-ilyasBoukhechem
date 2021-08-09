@@ -1,6 +1,8 @@
 <template>
-  <div class="d-flex flex-column justify-content-center block p-4">
-    <h2>Créer un nouveaux post</h2>
+  <div
+    class="d-flex flex-column justify-content-center block p-4 backgroundCard"
+  >
+    <h2>Créer une nouvelle publication</h2>
     <form
       class=" d-flex flex-column justify-content-center "
       @submit.prevent="onSubmit()"
@@ -27,15 +29,19 @@
       <div
         class="d-flex custom-file flex-column justify-content-center align-items-center"
       >
-        <input
-          type="file"
-          ref="file"
-          @change="fileSelected"
-          class="d-flex flex-column custom-file-input"
-        />
-        <label for="file" class="custom-file-label">
-          <i class="fas fa-upload"></i>
-        </label>
+        <div class="custom-file">
+          <input
+            type="file"
+            ref="file"
+            id="file"
+            @change="fileSelected"
+            class="d-flex flex-column custom-file-input"
+          />
+          <label for="file" class="custom-file-label">
+            Importer le fichier
+            <i class="fas fa-upload"> </i>
+          </label>
+        </div>
       </div>
       <div class="p-3 4">
         <img id="output" alt="dataImage" />
@@ -43,9 +49,11 @@
       <div
         class="d-flex m-2 flex-column justify-content-center align-items-center"
       >
-        <button @click.prevent="onSubmit" class="btn btn-primary">
-          valider
-        </button>
+        <label for="button">
+          <button @click.prevent="onSubmit" id="button" class="btn btn-primary">
+            valider
+          </button>
+        </label>
       </div>
     </form>
   </div>

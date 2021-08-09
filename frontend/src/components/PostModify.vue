@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column justify-content-center block p-4">
+  <div class="d-flex flex-column justify-content-center  p-4">
     <h2>Modifier le post</h2>
     <form
       class=" d-flex flex-column justify-content-center "
@@ -24,17 +24,17 @@
           v-model="text"
         />
       </div>
-      <div
-        class="d-flex custom-file flex-column justify-content-center align-items-center"
-      >
+      <div class="custom-file">
         <input
           type="file"
           ref="file"
+          id="file"
           @change="fileSelected"
           class="d-flex flex-column custom-file-input"
         />
         <label for="file" class="custom-file-label">
-          <i class="fas fa-upload"></i>
+          Importer le fichier
+          <i class="fas fa-upload"> </i>
         </label>
       </div>
       <div>

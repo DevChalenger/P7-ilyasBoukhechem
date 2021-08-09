@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header
-      class="header d-flex justify-content-center-xs justify-content-around  flex-wrap mb-5"
+      class="header d-flex justify-content-center-xs justify-content-around  flex-wrap mb-5 backgroundCard"
     >
       <div class="d-flex align-items-center ">
         <img src="@\assets\icon.png" alt="dataImage" />
@@ -11,24 +11,29 @@
           <ul class="d-flex flex-column p-0 mb-0">
             <li class="m-2 btn">
               <router-link to="/Home">
-                <div class="btn btn-outline-info">
-                  Acceuil
-                </div>
+                <button class="">
+                  Accueille
+                </button>
               </router-link>
             </li>
             <li class="m-2">
               <router-link to="/allUsers">
-                <div class="btn btn-outline-info">Liste des utilisateur</div>
+                <button class="">
+                  Liste des utilisateur
+                </button>
               </router-link>
             </li>
           </ul>
         </nav>
       </div>
       <div class="d-flex align-items-center p-4">
-        <router-link to="/user/:id">
-          <div class="btn btn-outline-info">
-            <i class="fas fa-user-circle"> </i>
-          </div>
+        <router-link to="/user/:id" class="">
+          <button class="">
+            <div class="d-flex flex-column">
+              <i class="fas fa-user-circle"> </i>
+              <span>Compte</span>
+            </div>
+          </button>
         </router-link>
       </div>
     </header>
