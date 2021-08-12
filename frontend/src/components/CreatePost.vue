@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="p-3 4">
-        <img id="output" alt="dataImage" />
+        <img id="output" alt="Input Image" />
       </div>
       <div
         class="d-flex m-2 flex-column justify-content-center align-items-center"

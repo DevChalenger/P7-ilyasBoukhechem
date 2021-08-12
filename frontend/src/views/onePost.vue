@@ -13,13 +13,13 @@
       <div class=" d-flex justify-content-center">
         <div class="card m-5 ard m-4 backgroundCard p-2">
           <div class="card-header backgroundCardHeader p-3 m-1">
-            <h4 id="Title">
+            <h2 id="Title">
               {{ userPost.firstName }}
               {{ userPost.lastName }}
-            </h4>
+            </h2>
           </div>
           <div class="DescriptionBlock card-text backgroundText m-1 ">
-            <h4 id="Title">{{ postId.title }}</h4>
+            <h3 id="Title">{{ postId.title }}</h3>
             <p id="description" class="descriptionIndex">{{ postId.text }}</p>
             <div
               class=" d-flex justify-content-center"

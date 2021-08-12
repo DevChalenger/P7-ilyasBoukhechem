@@ -58,20 +58,23 @@ button:focus {
 .borderRadius {
   border-radius: 0.5em;
 }
+a {
+  color: #c72e2e;
+}
 button {
-  background-color: #7c0e0e;
+  background-color: #c72e2e;
   outline: none;
   border: 0;
-  color: white;
+  color: rgb(250, 240, 240);
   padding: 0.5em 1.5rem;
   border-radius: 0.5em;
 }
 .backgroundCard {
-  background-color: rgb(250, 195, 195);
+  background-color: rgb(250, 240, 240);
 }
 .backgroundCardHeader {
-  background-color: #7c0e0e;
-  color: rgb(250, 195, 195);
+  background-color: #c72e2e;
+  color: rgb(250, 240, 240);
 }
 .backgroundText {
   background-color: white;

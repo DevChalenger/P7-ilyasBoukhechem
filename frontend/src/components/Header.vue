@@ -4,7 +4,11 @@
       class="header d-flex justify-content-center-xs justify-content-around  flex-wrap mb-5 backgroundCard"
     >
       <div class="d-flex align-items-center ">
-        <img src="@\assets\icon.png" alt="dataImage" />
+        <img
+          src="@\assets\icon-left-font-monochrome-white.png"
+          alt="Groupomania logo"
+          height="200px"
+        />
       </div>
       <div class="d-flex align-items-center flex-wrap">
         <nav>
@@ -54,9 +58,8 @@ export default {
   box-shadow: 20px -20px 20px 20px;
 }
 img {
-  z-index: 200;
-  height: 100px;
-  width: 100px;
+  padding: 0;
+  height: 250px;
 }
 ul {
   list-style: none;

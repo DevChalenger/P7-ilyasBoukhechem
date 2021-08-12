@@ -38,7 +38,7 @@
         </label>
       </div>
       <div>
-        <img id="output" class="m-2" />
+        <img id="output" class="m-2" alt="Modify Image" />
       </div>
       <div
         class="d-flex m-2 flex-column justify-content-center align-items-center"
